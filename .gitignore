@@ -78,3 +78,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 src/build-BitJaeger-Reflow-Desktop_Qt_5_5_0_MinGW_32bit-Debug/debug/BitJaeger-Reflow.exe
+src/build-BitJaeger-Reflow-Desktop_Qt_5_5_0_MinGW_32bit-Debug/config.json
+src/build-BitJaeger-Reflow-Desktop_Qt_5_5_0_MinGW_32bit-Debug/object_script.BitJaeger-Reflow.Debug
+src/build-BitJaeger-Reflow-Desktop_Qt_5_5_0_MinGW_32bit-Debug/default.json

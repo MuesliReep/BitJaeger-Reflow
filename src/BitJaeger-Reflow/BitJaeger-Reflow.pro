@@ -14,10 +14,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp\
-        qcustomplot.cpp
+        qcustomplot.cpp \
+    profile.cpp \
+    program.cpp \
+    config.cpp \
+    pid.cpp \
+    updatepacket.cpp \
+    ovencontroller.cpp
 
 HEADERS  += mainwindow.h\
-            qcustomplot.h
+            qcustomplot.h \
+    profile.h \
+    program.h \
+    config.h \
+    pid.h \
+    updatepacket.h \
+    ovencontroller.h
 
 
 FORMS    += mainwindow.ui
