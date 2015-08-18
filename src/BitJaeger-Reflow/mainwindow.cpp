@@ -22,6 +22,7 @@ void MainWindow::setupPlot() {
   QColor red(255,0,0);
   QColor green(0,255,0);
   QColor yellow(255,255,0);
+  QColor blue(0,0,255);
   QColor black(0,0,0);
 
   // Set initial ranges, these are updated when new data arrives
@@ -87,6 +88,11 @@ void MainWindow::updateProfile(QString profileName, QList<float> profilePoints) 
   ui->temperaturePlot->replot();
 }
 
+void MainWindow::error(QString error)
+{
+
+}
+
 void MainWindow::scaleTempPlot(QList<float> plotPoints) {
 
   int maxTime = plotPoints.size();
@@ -104,12 +110,27 @@ void MainWindow::scaleTempPlot(QList<float> plotPoints) {
 
 void MainWindow::updateUI(UpdatePacket packet) {
 
-  ui->labelTargetValue->setText(QString::number(packet.getTarget()));
-  ui->labelTempValue->setText(QString::number(packet.getTemp()));
+  // Set new values to labels
+  ui->labelTargetValue->setText(QString::number(packet.getTarget()) + "°C");
+  ui->labelTempValue->setText(QString::number(packet.getTemp()) + "°C");
   ui->labelTimeValue->setText(QString::number(packet.getTime()));
+  ui->labelHeatValue->setText(packet.getRelay() ? "ON" : "OFF");
 
+  // Update time line indicator
   timeIndicator->start->setCoords(packet.getTime(),0);
   timeIndicator->end->setCoords(packet.getTime(),300);
+
+  // Plot measured temperature
+  measuredData->clearData();
+
+  float key = 0.0;
+
+  for(int i = 0; i < packet.getMeasuredData().size(); i++) {
+
+    key = (float)i;
+
+    measuredData->addData(key, packet.getMeasuredData()[i]);
+  }
 
   ui->temperaturePlot->replot();
 }

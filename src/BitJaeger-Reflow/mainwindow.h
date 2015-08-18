@@ -34,6 +34,7 @@ private:
 public slots:
   void updateUI(UpdatePacket packet);
   void updateProfile(QString profileName, QList<float> profilePoints);
+  void error(QString error);
 
 private slots:
   void startStopButtonPressed();

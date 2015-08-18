@@ -11,6 +11,7 @@
 #include "pid.h"
 #include "updatepacket.h"
 #include "ovencontroller.h"
+#include "logging.h"
 
 class Program : public QThread {
 
@@ -26,8 +27,10 @@ private:
   Profile p;
   Config c;
   PID pid;
-  OvenController oven;
+  OvenController *oven;
+  Logging log;
   QTimer *timer;
+
   int time;
 
   QList<float> measuredData;
@@ -45,6 +48,7 @@ private slots:
 signals:
   void updateUI(UpdatePacket packet);
   void updateProfile(QString profileName, QList<float> profileData);
+  void error(QString errorString);
 };
 
 #endif // PROGRAM_H

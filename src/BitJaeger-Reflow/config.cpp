@@ -49,6 +49,8 @@ bool Config::loadConfig() {
     sampleRate      = object.value("sampleRate").toDouble();
     windUpPercent   = object.value("windUpPercent").toDouble();
     profileFileName = object.value("profileFileName").toString();
+    serialPort      = object.value("serialPort").toString();
+    baudRate        = object.value("baudRate").toInt();
   }
 
   return true;
@@ -65,6 +67,8 @@ void Config::saveConfig() {
   object.insert("sampleRate", sampleRate);
   object.insert("windUpPercent", windUpPercent);
   object.insert("profileFileName", profileFileName);
+  object.insert("serialPort", serialPort);
+  object.insert("baudRate", baudRate);
 
   // Create a JSON document from the newly created JSON object
   QJsonDocument document(object);
@@ -81,14 +85,28 @@ void Config::loadDefaultConfig() {
   I = 0.5;
   D = 100;
 
-  windUpPercent   = 0.05;
-  sampleRate      = 1;
+  windUpPercent = 0.05;
+  sampleRate    = 1;
+
+  serialPort = "";
+  baudRate   = 0;
+
   profileFileName = "default.json";
 }
+int Config::getBaudRate() const
+{
+    return baudRate;
+}
+
+QString Config::getSerialPort() const
+{
+    return serialPort;
+}
+
 
 float Config::getP() const
 {
-  return P;
+    return P;
 }
 float Config::getI() const
 {

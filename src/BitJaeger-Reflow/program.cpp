@@ -12,8 +12,16 @@ void Program::startProgram() {
   // Load config
   c.loadConfig();
 
+  // Initialise oven connection
+  oven = new OvenController(&c);
+  if(!oven->initialise()) {
+
+  }
+
+
   // Create PID controller
   pid = PID(&c);
+  pid.initialise();
 
   // Create & connect timer
   timer = new QTimer(this);
@@ -46,15 +54,18 @@ void Program::updateTick() {
   time++; // Add a second to the time // TODO: should be from samplerate
 
   // Get new data
-  float temp = oven.getTemp();
+  float temp = oven->getTemp();
   measuredData.append(temp);
 
   // Update PID
   float target = p.getTemp((float)time);
-  bool heating = pid.update(temp, target);
+  bool heating = pid.update(target, temp);
+
+  // Save to log
+  log.append(); // TODO
 
   // Set relay state to oven controller
-  oven.setHeating(heating);
+  oven->setHeating(heating);
 
   // Update UI
   UpdatePacket packet(target, temp, time, heating, measuredData);

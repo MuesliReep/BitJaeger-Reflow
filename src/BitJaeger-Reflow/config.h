@@ -19,6 +19,10 @@ public:
   float getSampleRate() const;
   float getWindUpPercent() const;
 
+  QString getSerialPort() const;
+
+  int getBaudRate() const;
+
 private:
   void loadDefaultConfig();
 
@@ -29,6 +33,9 @@ private:
   float D;
   float sampleRate;
   float windUpPercent;
+
+  QString serialPort;
+  int baudRate;
 };
 
 #endif // CONFIG_H

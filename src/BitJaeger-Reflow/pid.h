@@ -7,9 +7,22 @@ class PID
 {
 public:
   PID();
-  PID(Config *c);
+  PID(Config *C);
 
-  bool update(float temp, float time);
+  bool update(float target, float temp);
+  void initialise();
+
+private:
+
+  float Kp;
+  float Ki;
+  float Kd;
+
+  float Summation;
+  float tempPrevious;
+  float windUpPercent;
+
+  Config *c;
 };
 
 #endif // PID_H

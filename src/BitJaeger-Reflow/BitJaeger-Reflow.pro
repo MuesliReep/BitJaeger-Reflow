@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -20,7 +21,9 @@ SOURCES += main.cpp\
     config.cpp \
     pid.cpp \
     updatepacket.cpp \
-    ovencontroller.cpp
+    ovencontroller.cpp \
+    logging.cpp \
+    options.cpp
 
 HEADERS  += mainwindow.h\
             qcustomplot.h \
@@ -29,7 +32,10 @@ HEADERS  += mainwindow.h\
     config.h \
     pid.h \
     updatepacket.h \
-    ovencontroller.h
+    ovencontroller.h \
+    logging.h \
+    options.h
 
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    options.ui
