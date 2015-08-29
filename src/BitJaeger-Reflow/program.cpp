@@ -16,8 +16,9 @@ void Program::startProgram() {
   oven = new OvenController(&c);
   if(!oven->initialise()) {
 
+    qDebug() << "Could not initiate communication";
+    return;
   }
-
 
   // Create PID controller
   pid = PID(&c);

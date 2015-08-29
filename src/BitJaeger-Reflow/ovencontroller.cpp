@@ -15,15 +15,20 @@ float OvenController::getTemp() {
 
   float temp = -1.0;
 
+  qDebug() << "Sending temp request";
   QString response = sendMessage("b");
 
   if(response.contains("b")) {
 
     QStringList l = response.split("b");
     temp = l[0].toFloat();
+    qDebug() << "Received temp: " << temp;
+  } else {
+
+    qDebug() << "Bad response from temperature request: " << response;
   }
 
-  return 25.0;
+  return temp;
 }
 
 void OvenController::setHeating(bool state) {
@@ -55,8 +60,13 @@ bool OvenController::initialise() {
     return false;
   }
 
-  // Send test message
-  QString response = sendMessage("a");
+  // Wait for the arduino to initialise
+  QThread::sleep(4); // Seconds
+
+  // Send test message & wait a little
+  sendMessage("qqqqqqqqqqqqqqqqqq");
+  QThread::msleep(100);
+  QString response = sendMessage("a", 4000);
 
   if(!response.contains("a") || response.contains("z")) {
 
@@ -77,29 +87,42 @@ void OvenController::closeConnection() {
 
 }
 
-QString OvenController::sendMessage(QString message) {
+QString OvenController::sendMessage(QString message, int timeOut, bool waitResponse) {
 
-  QString response = "z";
-  int timeOut = 500;
+  QString response = "x";
+
+  serial.clear();
 
   QByteArray data = message.toLocal8Bit();
-  serial.write(data);
+  qDebug() << "Bytes written: " << serial.write(data);
+  serial.flush();
 
-  if (serial.waitForBytesWritten(timeOut)) {
-    // read response
-    if (serial.waitForReadyRead(timeOut)) {
-        QByteArray responseData = serial.readAll();
-        while (serial.waitForReadyRead(10))
-            responseData += serial.readAll();
+//  if (serial.waitForBytesWritten(timeOut)) {
+//    // read response
+//    if (serial.waitForReadyRead(timeOut)) {
+//        QByteArray responseData = serial.readAll();
+//        while (serial.waitForReadyRead(500))
+//            responseData += serial.readAll();
 
-        response = QString(responseData);
+//        response = QString(responseData);
 
-    } else {
-        qDebug() << "Wait read response timeout";
-    }
+//    } else {
+//        //qDebug() << "Read timeout";
+//    }
+//  } else {
+//      //qDebug() << "Write timeout";
+//  }
+
+  if(serial.waitForBytesWritten(6000)) { //timeOut
+    qDebug() << "Write timeout";
   } else {
-      qDebug() << "Wait write request timeout %1";
+    qDebug() << "Message sent";
   }
+
+  while(!serial.canReadLine()) {}
+
+  QByteArray responseData = serial.readAll();
+  response = QString(responseData);
 
   return response;
 }

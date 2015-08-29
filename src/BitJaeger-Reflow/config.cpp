@@ -88,8 +88,8 @@ void Config::loadDefaultConfig() {
   windUpPercent = 0.05;
   sampleRate    = 1;
 
-  serialPort = "";
-  baudRate   = 0;
+  serialPort = "COM5";
+  baudRate   = 115200;
 
   profileFileName = "default.json";
 }

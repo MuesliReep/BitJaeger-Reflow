@@ -26,7 +26,7 @@ private:
 
   void openConnection();
   void closeConnection();
-  QString sendMessage(QString message);
+  QString sendMessage(QString message, int timeOut = 700, bool waitResponse = true);
 };
 
 #endif // OVENCONTROLLER_H
