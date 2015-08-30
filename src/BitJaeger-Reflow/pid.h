@@ -9,7 +9,7 @@ public:
   PID();
   PID(Config *C);
 
-  bool update(float target, float temp);
+  bool update(float target, float temp, bool *heating, bool *cooling);
   void initialise();
 
 private:

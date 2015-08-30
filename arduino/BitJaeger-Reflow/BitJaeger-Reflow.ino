@@ -4,7 +4,7 @@
 
 // The control pins
 #define HEATINGPIN A0
-#define COOLINGPIN 9
+#define COOLINGPIN A5
 
 // The SPI pins for the thermocouple sensor
 #define MAX_CLK 5
@@ -31,7 +31,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
 
-  temp = 12.5;
+  temp = -25.0;
 
   // Setup heating & cooling output pins
   pinMode(HEATINGPIN, OUTPUT);
@@ -94,25 +94,35 @@ void parseSerialRequest() {
 }
 
 void sendTemp() {
+
+  temp = thermocouple.readCelsius();
   Serial.print('b');
-  Serial.println(temp);
-  
+  Serial.print(temp);
+  Serial.print(';');
 }
 
 void setHeating(bool state) {
 
-  Serial.println(state ? 'c' : 'd');
+  digitalWrite(HEATINGPIN, state ? HIGH : LOW);
+
+  //Serial.print(state ? 'c' : 'd');
+  //Serial.print(';');
 }
 
 void setCooling(bool state) {
 
-  Serial.println(state ? 'e' : 'f');
+  digitalWrite(COOLINGPIN, state ? HIGH : LOW);
+
+  //Serial.println(state ? 'e' : 'f');
+  //Serial.print(';');
 }
 
 void sendAlive() {
-  Serial.println('a');
+  Serial.print('a');
+  Serial.print(';');
 }
 
 void sendError() {
-  Serial.println('z');
+  Serial.print('z');
+  Serial.print(';');
 }

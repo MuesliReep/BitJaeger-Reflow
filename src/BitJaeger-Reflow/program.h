@@ -13,6 +13,8 @@
 #include "ovencontroller.h"
 #include "logging.h"
 
+#include "comms.h"
+
 class Program : public QThread {
 
   Q_OBJECT
@@ -21,6 +23,7 @@ public:
   Program(MainWindow *W);
 
   void run();
+
 
 private:
   MainWindow *w;
@@ -41,6 +44,7 @@ private:
 public slots:
   void startProgram();
   void stopProgram();
+  void updatePID(float temp);
 
 private slots:
   void updateTick();

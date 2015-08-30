@@ -19,7 +19,7 @@ void PID::initialise() {
   windUpPercent = c->getWindUpPercent();
 }
 
-bool PID::update(float target, float temp) {
+bool PID::update(float target, float temp, bool *heating, bool *cooling) {
 
   float MV;    // Manipulated Variable (ie. whether to turn on or off the relay!)
   float Error; // how off we are
@@ -43,6 +43,9 @@ bool PID::update(float target, float temp) {
 
   // Save the current temperature
   tempPrevious = temp;
+
+  *heating = MV >= 1.0 ? true : false;
+  *cooling = MV <= -1.0 ? true : false;
 
   return MV >= 1.0 ? true : false;
 }

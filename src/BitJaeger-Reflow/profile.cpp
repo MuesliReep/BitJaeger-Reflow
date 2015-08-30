@@ -155,12 +155,28 @@ void Profile::loadDefaultProfile() {
   // Default profile does not exist, we need to create one
   profileName = "Default lead free";
 
+//  dataPoints.append(DataPoint(0,25));      // Starting temp
+//  dataPoints.append(DataPoint(90,150));    // Pre Heat
+//  dataPoints.append(DataPoint(180,217));   // End of soak
+//  dataPoints.append(DataPoint(225,245));   // Peak temp
+//  dataPoints.append(DataPoint(270,217));   // End of reflow zone
+//  dataPoints.append(DataPoint(337.5,25));  // End of profile
+
   dataPoints.append(DataPoint(0,25));      // Starting temp
   dataPoints.append(DataPoint(90,150));    // Pre Heat
-  dataPoints.append(DataPoint(180,217));   // End of soak
-  dataPoints.append(DataPoint(225,245));   // Peak temp
-  dataPoints.append(DataPoint(270,217));   // End of reflow zone
-  dataPoints.append(DataPoint(337.5,25));  // End of profile
+  dataPoints.append(DataPoint(112.5,200)); // End of soak
+  dataPoints.append(DataPoint(121.4,217)); // Ramp to 217
+
+
+  dataPoints.append(DataPoint(159.4,255)); // Ramp to 255
+  dataPoints.append(DataPoint(166.6,260)); // Peak
+  dataPoints.append(DataPoint(178.6,260)); // End of peak
+  dataPoints.append(DataPoint(185.8,255)); // Ramp down to 255
+
+
+  dataPoints.append(DataPoint(205,217));   // End of reflow zone
+  dataPoints.append(DataPoint(234.1,150)); // End of profile
+  dataPoints.append(DataPoint(290,25));    // Cool down
 
   // Save the new default profiel
   saveProfile(defaultName);

@@ -21,9 +21,10 @@ SOURCES += main.cpp\
     config.cpp \
     pid.cpp \
     updatepacket.cpp \
-    ovencontroller.cpp \
     logging.cpp \
-    options.cpp
+    options.cpp \
+    ovencontroller.cpp
+
 
 HEADERS  += mainwindow.h\
             qcustomplot.h \
@@ -32,10 +33,18 @@ HEADERS  += mainwindow.h\
     config.h \
     pid.h \
     updatepacket.h \
-    ovencontroller.h \
     logging.h \
-    options.h
+    options.h \
+    ovencontroller.h
+
 
 
 FORMS    += mainwindow.ui \
     options.ui
+
+#-----------------------
+#   Remove when done
+#-----------------------
+SOURCES += D:/Qt5.5/Tools/QtCreator/bin/Serial-Conole/comms.cpp
+HEADERS +=D:/Qt5.5/Tools/QtCreator/bin/Serial-Conole/comms.h
+INCLUDEPATH += D:/Qt5.5/Tools/QtCreator/bin/Serial-Conole/

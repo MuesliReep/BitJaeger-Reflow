@@ -1,32 +1,48 @@
 #ifndef OVENCONTROLLER_H
 #define OVENCONTROLLER_H
 
-#include <QtSerialPort/QtSerialPort>
+#include <QObject>
+#include <QtSerialPort/QSerialPort>
 #include <QDebug>
-#include <QStringList>
-#include <QString>
+#include <QThread>
 
 #include "config.h"
 
-class OvenController
-{
-public:
-  OvenController() {}
-  OvenController(Config *C);
-  ~OvenController();
+enum DeviceState { OFF, ON };
 
-  float getTemp();
+class OvenController : public QObject
+{
+  Q_OBJECT
+public:
+  explicit OvenController(QObject *parent = 0);
+
+  bool openSerial();
+  void closeSerial();
+
+  void setConfig(Config *c);
+
+  DeviceState getState() const;
+
   void setHeating(bool state);
   void setCooling(bool state);
-  bool initialise();
-
-  QSerialPort serial;
+  void getTemp();
 private:
+  QSerialPort *serial;
   Config *c;
 
-  void openConnection();
-  void closeConnection();
-  QString sendMessage(QString message, int timeOut = 700, bool waitResponse = true);
+  QByteArray data;
+
+  DeviceState state;
+
+  void parseTemp(QString message);
+signals:
+  void updateTemp(float temp);
+
+public slots:
+
+private slots:
+  void sendMessage(const QString message);
+  void readData();
 };
 
 #endif // OVENCONTROLLER_H
